@@ -1,0 +1,9 @@
+.FooterStyle{
+    background-color: grey;
+    text-align: center;
+    font-size: small;
+    height: 10%;
+}
+p{
+    padding: 1%;
+}
