@@ -1,36 +1,36 @@
 import React, { Component } from 'react'
-import Archive from '@material-ui/icons/ArchiveOutlined';
-import Unarchive from '@material-ui/icons/UnarchiveOutlined';
-
 import { toast } from "react-toastify";
+import { Icon } from '@iconify/react';
+import unpinIcon from '@iconify/icons-mdi/pin';
+import pinIcon from '@iconify/icons-mdi/pin-outline';
 
-export default class AddToArchive extends Component {
+export default class PinUnpin extends Component {
 
     // constructor(props) {
     //     super(props);
 
     // }
 
-    handleArchiveNote = () => {
-        var archiveDetails = {
+    handlePinUnpin = () => {
+
+        var pinunpinDetails = {
             "noteid": this.props.noteid
         }
-        if (this.props.isarchived === "false") {
-            this.addToArchive(archiveDetails)
+        if (this.props.ispined === "false") {
+            this.addToPin(pinunpinDetails)
         }
         else {
-            this.unarchiveNote(archiveDetails)
-
+            this.addToUnPin(pinunpinDetails)
         }
 
     }
-    addToArchive(archiveDetails) {
+    addToPin(pinunpinDetails) {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(archiveDetails)
+            body: JSON.stringify(pinunpinDetails)
         };
-        fetch(process.env.REACT_APP_HOST + '/archive', requestOptions)
+        fetch(process.env.REACT_APP_HOST + '/pin', requestOptions)
             .then(response => {
                 response.json()
                     .then(data => {
@@ -44,13 +44,13 @@ export default class AddToArchive extends Component {
             })
     }
 
-    unarchiveNote(archiveDetails) {
+    addToUnPin(pinunpinDetails) {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(archiveDetails)
+            body: JSON.stringify(pinunpinDetails)
         };
-        fetch(process.env.REACT_APP_HOST + '/unarchive', requestOptions)
+        fetch(process.env.REACT_APP_HOST + '/unpin', requestOptions)
             .then(response => {
                 response.json()
                     .then(data => {
@@ -63,20 +63,19 @@ export default class AddToArchive extends Component {
                     });
             })
     }
+
     render() {
-        
-        if (this.props.isarchived === "false") {
+        if (this.props.ispined === "false") {
             return (
-                <div onClick={this.handleArchiveNote} >
-                    <Archive />
-
+                <div onClick={this.handlePinUnpin} style={{ fontSize: '25px' }}>
+                    <Icon icon={pinIcon} />
                 </div>
             )
         }
         else {
             return (
-                <div onClick={this.handleArchiveNote} >
-                    <Unarchive />
+                <div onClick={this.handlePinUnpin} style={{ fontSize: '25px' }}>
+                    <Icon icon={unpinIcon} />
                 </div>
             )
         }

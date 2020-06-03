@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import {
     Dialog, Card, DialogTitle, DialogContent, Button, InputBase, Divider,
-    Avatar, 
-    /* MenuItem, */ 
+    Avatar,
+    /* MenuItem, */
     MuiThemeProvider, createMuiTheme
 } from '@material-ui/core';
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
@@ -59,8 +59,7 @@ class CollaboratorComponent extends Component {
                 "email": this.state.email
             }
             this.searchUser(collabDetails)
-            // this.props.history.push("/allnotes")
-            console.log(collabDetails, "hhhhhhhhHHHHHHHHH");
+            // console.log(collabDetails, "hhhhhhhhHHHHHHHHH");
 
         }
     }
@@ -71,7 +70,7 @@ class CollaboratorComponent extends Component {
             body: JSON.stringify(collabDetails)
         };
         // console.log("login---> try know");
-        fetch(process.env.REACT_APP_HOST+'/search', requestOptions)
+        fetch(process.env.REACT_APP_HOST + '/search', requestOptions)
             .then(response => {
                 response.json()
                     .then(data => {
@@ -98,7 +97,7 @@ class CollaboratorComponent extends Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(collabDetails)
         };
-        fetch(process.env.REACT_APP_HOST+'/createCollaborator', requestOptions)
+        fetch(process.env.REACT_APP_HOST + '/createCollaborator', requestOptions)
             .then(response => {
                 response.json()
                     .then(data => {
@@ -133,27 +132,20 @@ class CollaboratorComponent extends Component {
                                     <div>
                                         <div className="collaborator-avtar-email">
                                             <div className="collaborator-firstAvatar">
-                                                <Avatar style={{ width: "35px", height: "35px" }}>
-                                                    <img alt="pic"
-                                                        style={{
-                                                            width: "-webkit-fill-available",
-                                                            height: "-webkit-fill-available",
-                                                        }}
-                                                        src={localStorage.getItem('profileimage')}
-                                                    />
 
-                                                </Avatar>
                                             </div>
                                             <div className="collaborator-name-email">
                                                 <span style={{ fontFamily: 'Roboto' }}>
                                                     <b>{localStorage.getItem('firstName')}
                                                         {localStorage.getItem('lastName')}
                                                     </b>
-                                                    <span style={{ fontFamily: "Roboto arial sansSerif", paddingLeft: "10px" }}>
-                                                        (owner)</span>
+                                                    <div style={{ fontFamily: "Roboto arial sansSerif", paddingLeft: "10px", fontSize: 20 }}>
+                                                        (Owner's Email)<br/>
+                                                        {localStorage.getItem('email')}
+                                                    </div>
                                                 </span>
                                                 <br />
-                                                {localStorage.getItem('email')}
+                                                {/* {localStorage.getItem('email')} */}
                                             </div>
                                         </div>
 

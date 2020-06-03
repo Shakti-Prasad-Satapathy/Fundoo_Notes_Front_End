@@ -14,7 +14,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ArchiveTwoToneIcon from '@material-ui/icons/ArchiveTwoTone';
 import DeleteTwoToneIcon from '@material-ui/icons/DeleteTwoTone';
 import NoteAddTwoToneIcon from '@material-ui/icons/NoteAddTwoTone';
-// import Typography from '@material-ui/core/Typography';
+import LabelIcon from '@material-ui/icons/Label';
 // import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -80,7 +80,7 @@ export default function MiniDrawer(props) {
             }
         }
     }
-
+    
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -186,14 +186,16 @@ export default function MiniDrawer(props) {
                     <Link to="/archive" style={{ textDecoration: 'none' }}><IconButton><ArchiveTwoToneIcon style={{ marginRight: "40px", fontSize: 35 }} />Archive</IconButton></Link><br /><hr />
                     <Link to="/trash" style={{ textDecoration: 'none' }}><IconButton><DeleteTwoToneIcon style={{ marginRight: "40px", fontSize: 35 }} />Trash</IconButton></Link><br /><hr />
                 </List>
-
+                <Divider />
+                {props.lablednotes !== undefined ?
+                    props.lablednotes.map((note, index) =>
+                        <div style={{ height: '5%' }} key= {index} >
+                            <IconButton ><LabelIcon style={{ marginRight: "40px", fontSize: 20 }} key = {index}/>{note.lable}</IconButton>
+                        </div>
+                    ) : null}
+                    
             </Drawer>
 
-
-            {/* <main className={classes.content}>
-                <div className={classes.toolbar} />
-                < Nc />
-            </main> */}
         </div>
     );
 }

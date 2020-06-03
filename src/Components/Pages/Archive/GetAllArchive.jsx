@@ -38,6 +38,7 @@ export default class Notes extends Component {
             .then(response => {
                 response.json()
                     .then(data => {
+                        
                         const allNotes = data.data.notes.map((notedata) => {
                             return (notedata)
                         });

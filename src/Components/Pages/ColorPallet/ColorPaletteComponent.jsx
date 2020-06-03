@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { Tooltip, IconButton, Popper, Paper, ClickAwayListener } from '@material-ui/core'
+import { Tooltip, IconButton, Popover, Paper, ClickAwayListener } from '@material-ui/core'
 import ColorLensOutlinedIcon from '@material-ui/icons/ColorLensOutlined';
 
 const colorPalette = [{ name: "default", colorCode: "#FDFEFE" },
@@ -45,7 +45,7 @@ export default class ColorPaletteComponent extends Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(addColorDetails)
         };
-        fetch(process.env.REACT_APP_HOST+'/addnotecolor', requestOptions)
+        fetch(process.env.REACT_APP_HOST + '/addnotecolor', requestOptions)
             .then(response => {
                 response.json()
                     .then(data => {
@@ -74,7 +74,7 @@ export default class ColorPaletteComponent extends Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(getColorDetails)
         };
-        fetch(process.env.REACT_APP_HOST+'/getnotecolor', requestOptions)
+        fetch(process.env.REACT_APP_HOST + '/getnotecolor', requestOptions)
             .then(response => {
                 response.json()
                     .then(data => {
@@ -96,10 +96,11 @@ export default class ColorPaletteComponent extends Component {
             // anchorEl: event.target
         });
     };
+
     render() {
         const colorChange = colorPalette.map((key, index) => {
             return (
-                <div key = {index} >
+                <div key={index} >
                     <Tooltip title={key.name}>
                         <IconButton style={{ backgroundColor: key.colorCode, border: "silver 2px solid" }}
                             value={key.colorCode}
@@ -111,17 +112,34 @@ export default class ColorPaletteComponent extends Component {
         })
         return (
             <div className="colorpalette-div" >
-                    <ClickAwayListener onClickAway={this.handleClickAway}>
-                        <ColorLensOutlinedIcon ref={this.buttonRef} onClick={(event) => this.handleClick(event)} cursor="pointer" />
-                    </ClickAwayListener>
-                <Popper open={this.state.anchorEl} anchorEl={() => this.buttonRef.current} >
+                <ClickAwayListener onClickAway={this.handleClickAway}>
+                    <ColorLensOutlinedIcon ref={this.buttonRef} onClick={(event) => this.handleClick(event)} cursor="pointer" />
+                </ClickAwayListener>
+                <Popover
+                    // open={this.state.anchorEl}
+                    // anchorEl={() => this.buttonRef.current} >
+                    open={this.state.anchorEl}
+                    onClose={this.handleClose}
+                    // anchorEl={this.state.anchorEl}
+                    anchorEl={() => this.buttonRef.current}
+
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+
+                    }}
+                >
                     {/* {console.log(this.state.anchorEl, "8888888")} */}
                     <Paper >
                         {colorChange}
                     </Paper>
-                </Popper>
-                
-            </div>
+                </Popover>
+
+            </div >
         )
     }
 }

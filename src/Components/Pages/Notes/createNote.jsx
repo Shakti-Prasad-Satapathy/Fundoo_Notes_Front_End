@@ -10,6 +10,19 @@ import { Icon } from '@iconify/react';
 import pinIcon from '@iconify/icons-mdi/pin';
 import './Notes.css'
 
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Morevert from '@material-ui/icons/MoreVert';
+import Reminder from '../Reminder/Reminder'
+import Collab from '../Collab/CollaboratorComponent'
+import Colorpallet from '../ColorPallet/ColorPaletteComponent'
+import Archive from '../Archive/ArchiveComponent'
+import Trash from '../Trash/addTotrash'
+import Addpic from '../imgupload/FileUpload'
+import Label from '../Lables/Lables'
+
+// import Pinicon from '../PinUnpin/PinUnpin'
+
 const customStyles = {
     content: {
         width: '47%',
@@ -94,7 +107,7 @@ export default class createNote extends Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(createNoteDetails)
         };
-        fetch(process.env.REACT_APP_HOST+'/createNote', requestOptions)
+        fetch(process.env.REACT_APP_HOST + '/createNote', requestOptions)
             .then(response => {
                 response.json()
                     .then(data => {
@@ -111,8 +124,8 @@ export default class createNote extends Component {
     render() {
         return (
             <div>
-                <Card style={{ width: '50%', marginLeft: '30%', marginBottom: '10%', height: '50%', borderRadius: '35% 35% 35% 35%', background: 'darkgrey' }} onClick={this.togglModal}>
-                    <Typography className='title' color="textSecondary" gutterBottom style = {{marginTop: '3%', marginLeft: '5%'}} >
+                <Card style={{ width: '50%', marginLeft: '30%', marginBottom: '10%', marginTop: '1%', boxShadow: '1px 1px 10px 1px #888888', borderRadius: 8 }} onClick={this.togglModal}>
+                    <Typography className='title' color="textSecondary" gutterBottom style={{ marginTop: '1%', marginLeft: '5%' }} >
                         Take A Note...
                         </Typography>
 
@@ -126,8 +139,41 @@ export default class createNote extends Component {
                     <TextField label="Take a note" name="content" value={this.state.content} onChange={(e) => this.onChangeContent(e)}
                         helperText={this.state.error ? "Field should not be empty" : "Perfect!"}
                         error={this.state.error} /><br /><br /><br />
-                  
-                    <div >
+
+                    <div style={{ display: 'flex', justifyContent: 'space-evenly' }} >
+                        <Reminder />
+                        <Colorpallet />
+                        <Addpic />
+                        <Collab />
+                        <Archive />
+                        <div>
+                            < Morevert style={{ paddingBottom: '3%' }}
+                                aria-label="more"
+                                aria-controls="long-menu"
+                                aria-haspopup="true"
+                                onClick={this.handleMenuClick}
+                            />
+                            <Menu
+                                open={this.state.isTrue}
+                                anchorEl={this.state.anchorEl}
+                                onClose={this.handleMenuClose}
+                                keepMounted
+                                PaperProps={{
+                                    style: {
+                                        width: '10ch',
+                                    },
+                                }}
+                            >
+                                <MenuItem ><Trash
+                                /></MenuItem>
+                                <MenuItem onClick={this.handleMenuClose}>
+                                    <Label />
+                                </MenuItem>
+
+                            </Menu>
+                        </div>
+                        {/* </div>
+                    <div > */}
                         <Button onClick={this.handleCreateNote} >Save</Button>
                         <Button onClick={this.closeModal} >Close</Button>
 

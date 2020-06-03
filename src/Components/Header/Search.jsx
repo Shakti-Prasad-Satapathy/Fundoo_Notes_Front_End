@@ -59,19 +59,7 @@ export default class Search extends Component {
     render() {
 
         return (
-            <div >
-                {/* <div style={{ overflowY: "scroll", height: '450px', marginTop: "8%" }}>
-                    <div style={{ display: "flex", flexDirection: 'row', flexWrap: 'wrap', justifyContent: "space-evenly", marginLeft: '15%', marginRight: '2%' }}>
-                        
-                        {this.state.allNote.map((searchResult) =>
-
-                            < NoteCard allNote={searchResult} />
-                        )}
-                        
-                    </div>
-                </div> */}
-
-            </div >
+            <div></div>
         )
     }
     //     {/* <TextField name="title" label={<SearchIcon />} type="search" variant="filled" value={this.state.search} onChange={(e) => this.onChangeSearch(e)} onKeyPress={this.handleSearchNote} /> */}

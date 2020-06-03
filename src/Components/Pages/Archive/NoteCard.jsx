@@ -18,8 +18,8 @@ import Dialog from '@material-ui/core/Dialog';
 import Reminder from '../Reminder/Reminder'
 import Collab from '../Collab/CollaboratorComponent'
 import Colorpallet from '../ColorPallet/ColorPaletteComponent'
-import Archive from '../Archive/ArchiveComponent'
-import Trash from '../Trash/addTotrash'
+import UnArchive from '../Archive/UnarchiveComponent'
+import Trash from '../Trash/DeleteNote'
 import Addpic from '../imgupload/FileUpload'
 
 
@@ -156,7 +156,7 @@ export default class NoteCard extends Component {
                             <Collab
                                 noteid={this.props.allNote.noteid}
                             />
-                            <Archive
+                            <UnArchive
                                 noteid={this.props.allNote.noteid}
                             />
                             

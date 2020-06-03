@@ -79,6 +79,8 @@ class SignIn extends Component {
                         if (data.success) {
                             toast(data.message, { position: toast.POSITION.TOP_CENTER });
                             localStorage.setItem('token', data.data.token);
+                            localStorage.setItem('email', data.data.email);
+
                             this.props.history.push("/allnotes");
 
                         } else {

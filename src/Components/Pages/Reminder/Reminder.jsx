@@ -2,7 +2,8 @@ import React, { Component, createRef } from 'react';
 
 import DatePicker from 'react-datepicker';
 import Popover from '@material-ui/core/Popover';
-import Remindericon from '@material-ui/icons/AddAlert';
+import Remindericon from '@material-ui/icons/AddAlertOutlined';
+
 import { toast } from "react-toastify";
 
 import 'react-datepicker/dist/react-datepicker.css';

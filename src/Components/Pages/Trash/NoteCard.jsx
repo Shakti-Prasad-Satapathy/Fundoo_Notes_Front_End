@@ -19,7 +19,9 @@ import Reminder from '../Reminder/Reminder'
 import Collab from '../Collab/CollaboratorComponent'
 import Colorpallet from '../ColorPallet/ColorPaletteComponent'
 import Archive from '../Archive/ArchiveComponent'
-import Trash from '../Trash/addTotrash'
+import Untrash from '../Trash/Untrash'
+import Delete from '../Trash/DeleteNote'
+
 import Addpic from '../imgupload/FileUpload'
 
 
@@ -177,7 +179,9 @@ export default class NoteCard extends Component {
                                     },
                                 }}
                             >
-                                <MenuItem ><Trash noteid={this.props.allNote.noteid} /></MenuItem>
+                                <MenuItem ><Untrash noteid={this.props.allNote.noteid} /></MenuItem>
+                                <MenuItem ><Delete noteid={this.props.allNote.noteid} /></MenuItem>
+
                             </Menu>
                         </div>
                         <ToastContainer />

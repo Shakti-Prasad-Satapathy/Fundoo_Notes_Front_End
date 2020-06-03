@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Button from '@material-ui/core/Button';
+import Unarchive from '@material-ui/icons/UnarchiveOutlined';
 
 export default class AddToTrash extends Component {
 
@@ -43,8 +44,8 @@ export default class AddToTrash extends Component {
     render() {
         
         return (
-            <div >
-                        <Button onClick={this.handleUntrasheNote} >unarchive</Button>
+            <div onClick={this.handleUntrasheNote} >
+                <Unarchive />
             </div>
         )
     }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ImageIcon from '@material-ui/icons/ImageOutlined';
+var FormData = require('form-data');
+
 const url = "http://localhost:4000/"
 
 export default class FleUpload extends Component {
@@ -9,35 +11,43 @@ export default class FleUpload extends Component {
             imageUrl: '',
             filename: '',
         }
-
     }
 
     handleProfile = async (event) => {
         console.log("images selected", event.target.files[0]);
-        let value = url + event.target.files[0].name
-        //console.log("res in image",image);       
+        var value = url + event.target.files[0].name
+
         await this.setState({
             imageUrl: event.target.files[0],
             filename: event.target.files[0].name
         })
-        var addImgDetails = {
-            "noteid": this.props.noteid,
-            'file': this.state.imageUrl,
-            'filename': this.state.filename,
-            // 'image': this.state.imageUrl,
-        }
-        this.addNoteimg(addImgDetails)
+        console.log("res in image",this.state.filename);
+        let formData = new FormData();
+        formData.append("image", this.state.imageUrl);
+        formData.append("id", this.props.noteid)
+        formData.append("filename", this.state.filename);
+        
+        console.log("***//res in image===", formData);
+
+        console.log("***//res in image***", formData.get("image"), formData.get("id"));
+
+        this.addNoteimg(formData)
     }
-    
-    addNoteimg(addImgDetails) {
+
+    addNoteimg(formData) {
+        console.log("***//res in image", formData);
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(addImgDetails)
+            // headers: { 'Content-Type': 'multipart/form-data' },
+            body: formData
+            // body: JSON.stringify(formData)
+
         };
         fetch(process.env.REACT_APP_HOST + '/fileUpload', requestOptions)
             .then(response => {
+                // console.log(response);
+                
                 response.json()
                     .then(data => {
                         if (data.success) {
