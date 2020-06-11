@@ -18,7 +18,7 @@ export default class FleUpload extends Component {
         var value = url + event.target.files[0].name
 
         await this.setState({
-            imageUrl: event.target.files[0],
+            imageUrl: value,
             filename: event.target.files[0].name
         })
         console.log("res in image",this.state.filename);

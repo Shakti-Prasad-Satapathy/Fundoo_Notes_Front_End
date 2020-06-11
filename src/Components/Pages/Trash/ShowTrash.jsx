@@ -4,6 +4,9 @@ import { toast } from "react-toastify";
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 import NoteCard from './NoteCard'
+import StackGrid from "react-stack-grid";
+import './Trash.css';
+
 /********* */
 
 
@@ -33,7 +36,7 @@ export default class Notes extends Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(readNoteDetails)
         };
-        fetch(process.env.REACT_APP_HOST+'/showtrash', requestOptions)
+        fetch(process.env.REACT_APP_HOST + '/showtrash', requestOptions)
             .then(response => {
                 response.json()
                     .then(data => {
@@ -52,18 +55,16 @@ export default class Notes extends Component {
             })
 
     }
-    render() { 
+    render() {
         return (
             <div >
                 <Header props={this.props} />
-                <div style={{ overflowY: "scroll", height: '450px', marginTop: "8%" }}>
-                    <div style={{ display: "flex", flexDirection: 'row', flexWrap: 'wrap', justifyContent: "space-evenly", marginLeft: '15%', marginRight: '2%' }}>
+                <div className="NoteDiv" >
+                    <StackGrid columnWidth={250} style={{ marginLeft: '15%', marginRight: '5%' }}>
                         {this.state.allNote.map((allNote, index) =>
-
-                            < NoteCard allNote={allNote} key = {index} />
-
+                            < NoteCard allNote={allNote} key={index} />
                         )}
-                    </div>
+                    </StackGrid>
                 </div >
                 <Footer />
 

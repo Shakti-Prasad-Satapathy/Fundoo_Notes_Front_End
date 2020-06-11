@@ -116,11 +116,8 @@ export default class ColorPaletteComponent extends Component {
                     <ColorLensOutlinedIcon ref={this.buttonRef} onClick={(event) => this.handleClick(event)} cursor="pointer" />
                 </ClickAwayListener>
                 <Popover
-                    // open={this.state.anchorEl}
-                    // anchorEl={() => this.buttonRef.current} >
                     open={this.state.anchorEl}
                     onClose={this.handleClose}
-                    // anchorEl={this.state.anchorEl}
                     anchorEl={() => this.buttonRef.current}
 
                     anchorOrigin={{
@@ -133,7 +130,6 @@ export default class ColorPaletteComponent extends Component {
 
                     }}
                 >
-                    {/* {console.log(this.state.anchorEl, "8888888")} */}
                     <Paper >
                         {colorChange}
                     </Paper>

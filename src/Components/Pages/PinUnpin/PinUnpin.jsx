@@ -67,14 +67,15 @@ export default class PinUnpin extends Component {
     render() {
         if (this.props.ispined === "false") {
             return (
-                <div onClick={this.handlePinUnpin} style={{ fontSize: '25px' }}>
+                <div onClick={this.handlePinUnpin} className="Pin" >
                     <Icon icon={pinIcon} />
                 </div>
             )
         }
         else {
             return (
-                <div onClick={this.handlePinUnpin} style={{ fontSize: '25px' }}>
+                <div onClick={this.handlePinUnpin} className="Pin" >
+
                     <Icon icon={unpinIcon} />
                 </div>
             )

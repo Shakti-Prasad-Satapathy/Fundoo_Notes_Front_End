@@ -108,8 +108,8 @@ class Reminder extends Component {
                                 dateFormat="MM/dd/yyyy"
                             />
                         </div>
-                        <div className="form-group">
-                            <button className="btn btn-success">Add Date</button>
+                        <div >
+                            <button >Add Date</button>
                         </div>
                     </form>
                 </Popover>

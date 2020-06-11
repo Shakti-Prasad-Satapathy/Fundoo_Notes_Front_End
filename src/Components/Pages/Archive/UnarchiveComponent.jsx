@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Button from '@material-ui/core/Button';
-import Unarchive from '@material-ui/icons/UnarchiveOutlined';
 
 export default class AddToTrash extends Component {
 
@@ -35,7 +34,7 @@ export default class AddToTrash extends Component {
                             alert("Successfully note unArchived")
                             window.location.reload(false);
                         } else {
-                            alert("there is some probleam in untrashing")
+                            alert("there is some probleam in unArchiving")
                         }
                     });
             })
@@ -45,7 +44,7 @@ export default class AddToTrash extends Component {
         
         return (
             <div onClick={this.handleUntrasheNote} >
-                <Unarchive />
+                <Button >UnArchive</Button>
             </div>
         )
     }

@@ -44,16 +44,8 @@ export default class Lables extends Component {
         var lable = e.target.value;
         this.setState({
             lable: lable,
-        })
-        // console.log("LLLLLL", this.state.lable);
-        
+        })        
     }
-
-
-
-
-
-
 
     addLable(lableDetails) {
         const requestOptions = {

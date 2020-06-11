@@ -1,0 +1,6 @@
+.Pin{
+    margin-right: -7%;
+    align-self: flex-end;
+    font-size: 30px;
+    transform: rotate(45deg);
+}

@@ -18,6 +18,7 @@ import SearchNote from './Components/Header/Search';
 import Rem from './Components/Pages/Reminder/Reminder';
 
 import Asdxcghjjmm from './Components/Pages/Lables/RemoveLable';
+import Demo from './Components/demo';
 
 
 
@@ -36,7 +37,7 @@ function App(props) {
           <Route path="/trash" component={Trash} />
           <Route path="/searchNote" component={SearchNote} />
           <Route path="/rem" component={Rem} />
-          <Route path="/asdxcghjjmm" component={Asdxcghjjmm} />
+          <Route path="/demo" component={Demo} />
 
         </Switch>
       </div>

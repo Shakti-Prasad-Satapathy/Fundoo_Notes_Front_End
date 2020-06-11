@@ -83,11 +83,8 @@ export default class SignUp extends Component {
       .then(response => {
         response.json()
           .then(data => {
-            console.log(":L:L:L:L:L:", data);
-
             if (data.success) {
               toast(data.message, { position: toast.POSITION.TOP_CENTER });
-              // localStorage.setItem('token', data.data.token);
               this.props.history.push("/");
 
             } else {

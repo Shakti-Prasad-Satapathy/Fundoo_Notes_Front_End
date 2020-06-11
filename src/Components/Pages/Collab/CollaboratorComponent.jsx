@@ -59,8 +59,6 @@ class CollaboratorComponent extends Component {
                 "email": this.state.email
             }
             this.searchUser(collabDetails)
-            // console.log(collabDetails, "hhhhhhhhHHHHHHHHH");
-
         }
     }
     searchUser(collabDetails) {
@@ -130,11 +128,11 @@ class CollaboratorComponent extends Component {
                                 <Divider />
                                 <DialogContent>
                                     <div>
-                                        <div className="collaborator-avtar-email">
-                                            <div className="collaborator-firstAvatar">
+                                        <div>
+                                            <div >
 
                                             </div>
-                                            <div className="collaborator-name-email">
+                                            <div >
                                                 <span style={{ fontFamily: 'Roboto' }}>
                                                     <b>{localStorage.getItem('firstName')}
                                                         {localStorage.getItem('lastName')}
@@ -150,13 +148,13 @@ class CollaboratorComponent extends Component {
                                         </div>
 
                                         <div>
-                                            <div className="collaborator-avtar-email">
-                                                <div className="collaborator-secondAvatar">
+                                            <div >
+                                                <div >
                                                     <Avatar style={{ width: "35px", height: "35px" }}>
                                                         <PersonAddOutlinedIcon />
                                                     </Avatar>
                                                 </div>
-                                                <div className="collaborator-name-email">
+                                                <div>
                                                     <InputBase className="get-in2"
                                                         fullWidth
                                                         placeholder="person's email to share with"
@@ -172,7 +170,7 @@ class CollaboratorComponent extends Component {
                                         </div>
                                     </div>
                                     <div>
-                                        <div className="collaborator-buttons">
+                                        <div >
                                             <div >
                                                 <Button
                                                     onClick={this.handleClose}>

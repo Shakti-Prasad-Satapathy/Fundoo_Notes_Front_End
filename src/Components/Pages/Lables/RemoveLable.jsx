@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Chip from '@material-ui/core/Chip';
 import { toast } from "react-toastify";
 import { withRouter } from 'react-router-dom';
-
 class Chips extends Component {
     constructor(props) {
         super(props);
@@ -13,6 +12,7 @@ class Chips extends Component {
     }
 
     handleDelete = () => {
+
         var lableDetails = {
             'noteid': this.props.noteid,
             'lable': null,
@@ -41,19 +41,15 @@ class Chips extends Component {
                     .then(data => {
                         if (data.success) {
                             var resultnote = []
-
                             data.data.notes.map((note) => {
                                 return (resultnote.push(note))
                             })
-                            // resultnote.push(data.data.notes)
                             this.setState({
                                 result: resultnote
                             })
-                            console.log("JJJJJJJJJJJ", this.state.result);
-
                             this.props.history.push('/allnotes', { "allNote": this.state.result })
                         } else {
-                            // toast(data.message, { position: toast.POSITION.TOP_CENTER });
+                            toast(data.message, { position: toast.POSITION.TOP_CENTER });
                         }
                     });
             })
@@ -71,7 +67,8 @@ class Chips extends Component {
                     .then(data => {
                         if (data.success) {
                             toast(data.message, { position: toast.POSITION.TOP_CENTER });
-                            window.location = window.location
+                            // window.location = window.location
+                            window.reload(false);
                         } else {
                             toast(data.message, { position: toast.POSITION.TOP_CENTER });
                         }
@@ -80,9 +77,10 @@ class Chips extends Component {
     }
 
     render() {
+        // console.log("GGGGGGGGGG",this.props.lable);
         return (
             <div >
-                <Chip label={this.props.lable} onDelete={this.handleDelete} color="primary" onClick={this.handleClick} />
+                <Chip label={this.props.lable} onDelete={this.handleDelete} color="primary" onClick={() => this.handleClick()} />
             </div>
         );
     }

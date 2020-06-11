@@ -3,12 +3,16 @@ import { toast } from "react-toastify";
 
 import CreateNote from './createNote'
 import NoteCard from './NoteCard'
+import Divider from '@material-ui/core/Divider';
+import StackGrid from "react-stack-grid";
+
 /********* */
 import './Notes.css'
 
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 
+var xxx = ""
 
 export default class Notes extends Component {
 
@@ -17,8 +21,7 @@ export default class Notes extends Component {
         this.state = {
             lablednote: [],
             pinednotes: [],
-            unpinednotes: []
-
+            unpinednotes: [],
         }
     }
 
@@ -43,11 +46,10 @@ export default class Notes extends Component {
             .then(response => {
                 response.json()
                     .then(data => {
-                        // console.log(":::::::::----", data.data.notes.noteid);
-                        // console.log(unpinednotes,"L:LL::L:L:L:",pinednotes);
                         if (data.success) {
                             var unpinednotes = []
                             var pinednotes = []
+                            // var pinednotesrev = []
                             var lableednotes = []
 
                             data.data.notes.map((note) => {
@@ -59,17 +61,21 @@ export default class Notes extends Component {
                                 }
                             })
                             data.data.notes.map((note) => {
-                                if (note.lable !== null && !lableednotes.includes(note)) {
+                                if (note.lable !== null) {
                                     return (lableednotes.push(note))
                                 }
-                                
                             })
+                            const uniqueLableednotes = [...new Set(lableednotes.map(lableednotes => lableednotes.lable))]
+                            // console.log("KKKKK===KKKKK", pinednotes);
+                            // pinednotesrev = pinednotes.reverse()
+                            // console.log("KKKKKKKKKK", pinednotesrev);
+
                             this.setState({
                                 pinednotes: pinednotes,
                                 unpinednotes: unpinednotes,
-                                lablednote: lableednotes
+                                lablednote: uniqueLableednotes
                             })
-                            toast(data.message, { position: toast.POSITION.TOP_CENTER });
+                            // toast(data.message, { position: toast.POSITION.TOP_CENTER });
                         } else {
                             toast(data.message, { position: toast.POSITION.TOP_CENTER });
                         }
@@ -78,16 +84,18 @@ export default class Notes extends Component {
     }
     render() {
         if (this.props.location.state !== undefined) {
-            // console.log("///***********///", this.props.location.state);
             return (
                 <div >
-                    <Header props={this.props} lablednotes= {this.state.lablednote} />
-                    <div style={{ overflowY: "scroll", height: '450px', marginTop: "8%" }}>
-                        <div style={{ display: "flex", flexDirection: 'row', flexWrap: 'wrap', justifyContent: "space-evenly", marginLeft: '15%', marginRight: '5%' }}>
+                    <Header />
+                    {/* <Header props={this.props} lablednotes={this.state.lablednote} /> */}
+                    <div className="NoteDiv">
+                        {/* <div style={{ display: "flex", flexDirection: 'row', flexWrap: 'wrap', justifyContent: "space-evenly", marginLeft: '15%', marginRight: '5%' }}> */}
+                        <StackGrid columnWidth={250} style={{ marginLeft: '15%', marginRight: '5%' }}>
                             {this.props.location.state.allNote.map((note, index) =>
-                            < NoteCard allNote={note} key={index} />
+                                < NoteCard allNote={note} key={index} />
                             )}
-                        </div>
+                        </StackGrid>
+                        {/* </div> */}
                     </div>
 
                     <Footer />
@@ -98,19 +106,24 @@ export default class Notes extends Component {
         else {
 
             return (
-                <div >
-                    <Header props={this.props} lablednotes= {this.state.lablednote}/>
-                    <div style={{ overflowY: "scroll", height: '450px', marginTop: "8%" }}>
+                <div style={{ transform: (this.props.menu) ? "translate(80px,0)" : null, transition: (this.props.menu) ? ("0.5s") : null }} >
+                    <Header />
+                    <div className="NoteDiv">
                         <CreateNote />
-                        <div style={{ display: "flex", flexDirection: 'row', flexWrap: 'wrap', justifyContent: "flex-start", marginLeft: '15%', marginRight: '5%' }}>
+                        <StackGrid columnWidth={250} style={{ marginLeft: '15%', marginRight: '5%' }}>
                             {this.state.pinednotes.map((note, index) =>
                                 < NoteCard allNote={note} key={index} />
                             )}
+                        </StackGrid>
 
+                        <div style={{ marginLeft: '10%', padding: "5%" }}>
+                            <Divider />
+                        </div>
+                        <StackGrid columnWidth={250} style={{ marginLeft: '15%', marginRight: '5%' }}>
                             {this.state.unpinednotes.map((note, index) =>
                                 < NoteCard allNote={note} key={index} props={this.props} />
                             )}
-                        </div>
+                        </StackGrid>
                     </div>
 
                     <Footer />

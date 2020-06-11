@@ -13,32 +13,37 @@ import './Notes.css'
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Morevert from '@material-ui/icons/MoreVert';
-import Reminder from '../Reminder/Reminder'
-import Collab from '../Collab/CollaboratorComponent'
-import Colorpallet from '../ColorPallet/ColorPaletteComponent'
-import Archive from '../Archive/ArchiveComponent'
+
+// import Reminder from '../Reminder/Reminder'
+import Reminder from '@material-ui/icons/AddAlertOutlined';
+
+// import Collab from '../Collab/CollaboratorComponent'
+import Collab from '@material-ui/icons/PersonAddOutlined';
+
+// import Colorpallet from '../ColorPallet/ColorPaletteComponent'
+import Colorpallet from '@material-ui/icons/ColorLensOutlined';
+
+// import Archive from '../Archive/ArchiveComponent'
+import Archive from '@material-ui/icons/ArchiveOutlined';
+
 import Trash from '../Trash/addTotrash'
 import Addpic from '../imgupload/FileUpload'
 import Label from '../Lables/Lables'
+import Dialog from '@material-ui/core/Dialog';
+import './Notes.css'
 
 // import Pinicon from '../PinUnpin/PinUnpin'
 
-const customStyles = {
-    content: {
-        width: '47%',
-        marginLeft: '27%',
-        right: 'auto',
-        bottom: 'auto',
-        marginTop: "10%"
-    }
-};
+
+
 export default class createNote extends Component {
 
     constructor() {
         super();
         this.state = {
             isActiveModalModal: false,
-            error: false
+            error: false,
+            isOpen: false
 
         }
     }
@@ -47,7 +52,7 @@ export default class createNote extends Component {
     }
     togglModal = () => {
         this.setState({
-            isActiveModalModal: true, //!this.state.isActiveModalModal
+            isOpen: true, //!this.state.isActiveModalModal
             title: "",
             content: ""
         })
@@ -62,42 +67,32 @@ export default class createNote extends Component {
         var title = e.target.value;
         this.setState({
             title: title,
-            error: false
         })
     }
     onChangeContent = (e) => {
         var content = e.target.value;
         this.setState({
             content: content,
-            error: false
         })
     }
+    // handleCloseDialog = () => {
+    //     this.setState({
+    //         isOpen: false
+    //     })
+    // }
 
-    closeModal = () => {
+    handleClickClose = () => {
+
         this.setState({
-            isActiveModalModal: false
+            isOpen: false
         })
-    }
-    handleCreateNote = () => {
 
-
-        if (this.state.title === "" || this.state.content === "") {
-            this.setState({
-                error: true
-            })
-            console.log(this.state.error);
-
+        var createNoteDetails = {
+            'logintoken': localStorage.getItem('token'),
+            "title": this.state.title,
+            "content": this.state.content
         }
-        else {
-            this.setState({
-                isActiveModalModal: false
-            })
-
-            var createNoteDetails = {
-                'logintoken': localStorage.getItem('token'),
-                "title": this.state.title,
-                "content": this.state.content
-            }
+        if (this.state.title !== "" || this.state.content !== "") {
             this.createNotes(createNoteDetails)
         }
     }
@@ -124,23 +119,24 @@ export default class createNote extends Component {
     render() {
         return (
             <div>
-                <Card style={{ width: '50%', marginLeft: '30%', marginBottom: '10%', marginTop: '1%', boxShadow: '1px 1px 10px 1px #888888', borderRadius: 8 }} onClick={this.togglModal}>
+                <Card className="CreateNote" onClick={this.togglModal}>
                     <Typography className='title' color="textSecondary" gutterBottom style={{ marginTop: '1%', marginLeft: '5%' }} >
                         Take A Note...
                         </Typography>
 
                 </Card>
-                <Modal isOpen={this.state.isActiveModalModal} style={customStyles} onClose={this.closeModal} >
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Dialog open={this.state.isOpen} onClose={this.handleClickClose} aria-labelledby="form-dialog-title" fullWidth={true} PaperProps={{ style: { padding: '0%5%', top: "-20%", right: "-4%", boxShadow: '1px 1px 30px 10px #353434', }, }}  >
+                    <div >
                         <TextField label="Title" name="title" value={this.state.title} onChange={(e) => this.onChangeTitle(e)}
-                            helperText={this.state.error ? "Field should not be empty" : "Perfect!"}
-                            error={this.state.error} /> <Icon icon={pinIcon} />
-                    </div><br /><br /><br />
+                            InputProps={{ disableUnderline: true, }} style={{ width: "100%" }}
+                        />
+                        <Icon icon={pinIcon} style={{ marginTop: '3%', marginRight: '-7%', alignSelf: 'flex-end', fontSize: '30px', transform: 'rotate(45deg)' }} />
+                    </div>
                     <TextField label="Take a note" name="content" value={this.state.content} onChange={(e) => this.onChangeContent(e)}
-                        helperText={this.state.error ? "Field should not be empty" : "Perfect!"}
-                        error={this.state.error} /><br /><br /><br />
+                        InputProps={{ disableUnderline: true }} multiline={true}
+                    /><br />
 
-                    <div style={{ display: 'flex', justifyContent: 'space-evenly' }} >
+                    <div className="NoteFunctions" >
                         <Reminder />
                         <Colorpallet />
                         <Addpic />
@@ -153,7 +149,7 @@ export default class createNote extends Component {
                                 aria-haspopup="true"
                                 onClick={this.handleMenuClick}
                             />
-                            <Menu
+                            {/* <Menu
                                 open={this.state.isTrue}
                                 anchorEl={this.state.anchorEl}
                                 onClose={this.handleMenuClose}
@@ -170,15 +166,13 @@ export default class createNote extends Component {
                                     <Label />
                                 </MenuItem>
 
-                            </Menu>
+                            </Menu> */}
                         </div>
                         {/* </div>
                     <div > */}
-                        <Button onClick={this.handleCreateNote} >Save</Button>
-                        <Button onClick={this.closeModal} >Close</Button>
-
+                        <Button onClick={this.handleClickClose} >Close</Button>
                     </div>
-                </Modal>
+                </Dialog>
                 <ToastContainer />
             </div>
         )

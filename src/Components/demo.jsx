@@ -1,32 +1,41 @@
-import React, { Component } from 'react'
-import Chip from '@material-ui/core/Chip';
+import React, { Component } from "react";
+import StackGrid from "react-stack-grid";
+ 
+export default class Demo extends Component {
+  render() {
+    return (
+      <StackGrid
+        columnWidth={250}
+      >
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 11111 1111111111111111111111111111111 111111111111111111111111111111</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
+        <div  style={{border: 'solid'}}>Item 1</div>
 
-export default class Chips extends Component {
-    constructor() {
-        super();
-        this.state = {
-            showchip: true
-        }
-    }
 
-    handleDelete = () => {
-        this.setState({
-            showchip: false
-        })
-        console.log(this.showchip, "KKKKKKK");
-    }
-
-    handleClick = () => {
-alert("ffffffff")    }
-    render() {
-        return (
-            <div >
-                {this.state.showchip ?
-                    <Chip label="Deletable primary" onDelete={this.handleDelete} color="primary" onClick = {this.handleClick} />
-                    :
-                    null
-                }
-            </div>
-        );
-    }
+        {/* <div key="key2">Item 2</div>
+        <div key="key3">Item 3</div> */}
+      </StackGrid>
+    );
+  }
 }

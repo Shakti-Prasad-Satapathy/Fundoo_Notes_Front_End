@@ -7,22 +7,20 @@ import TextField from '@material-ui/core/TextField';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { toast, ToastContainer } from "react-toastify";
+
 /*************** */
-// import Addpic from '@material-ui/icons/Photo';
 import Morevert from '@material-ui/icons/MoreVert';
-import { Icon } from '@iconify/react';
-import pinIcon from '@iconify/icons-mdi/pin';
-/***************** */
-import '../Notes/Notes.css'
 import Dialog from '@material-ui/core/Dialog';
 import Reminder from '../Reminder/Reminder'
 import Collab from '../Collab/CollaboratorComponent'
 import Colorpallet from '../ColorPallet/ColorPaletteComponent'
+import Archive from '../Archive/ArchiveComponent'
 import UnArchive from '../Archive/UnarchiveComponent'
-import Trash from '../Trash/DeleteNote'
 import Addpic from '../imgupload/FileUpload'
-
-
+import Pinicon from '../PinUnpin/PinUnpin'
+import Label from '../Lables/Lables'
+import RemoveLable from '../Lables/RemoveLable'
+import './Archive.css';
 
 export default class NoteCard extends Component {
     constructor(props) {
@@ -32,18 +30,16 @@ export default class NoteCard extends Component {
             isTrue: false,
             anchorEl: null,
             title: "",
-            content: this.props.allNote.content
+            content: this.props.allNote.content,
+
         }
     }
-    // const [anchorEl, setAnchorEl] = React.useState(null);
 
     handleClickOpen = () => {
-
         this.setState({
             isOpen: true
 
         })
-
     }
     onChangeTitle = (e) => {
         var title = e.target.value;
@@ -77,7 +73,10 @@ export default class NoteCard extends Component {
                 noteid: this.props.allNote.noteid,
                 content: this.state.content
             }
-            this.editNotes(editNoteDetails)
+            if (this.props.allNote.content !== this.state.content) {
+                this.editNotes(editNoteDetails)
+            }
+            // this.editNotes(editNoteDetails)
         }
 
     }
@@ -122,27 +121,40 @@ export default class NoteCard extends Component {
         });
     }
 
+
     render() {
-        // console.log("444444", this.props.allNote.noteid);
 
         return (
-            <div style={{ marginBottom: "5%", width: "250px" }}>
-                <Card variant="outlined" style={{ display: 'flex', marginRight: "10%", justifyContent: 'space-evenly', width: '100%', marginBottom: '5%', backgroundColor: this.state.color, borderRadius: "5%" }} >
-                    <CardContent style={{ width: "100%" }} >
-                        <div onClick={this.handleClickOpen} >
-                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div className="NoteCard" >
+                <Card variant="outlined" className="Card" style={{ backgroundColor: this.state.color }} >
+                    <CardContent className="CardContent" >
+                        <div className="ContentDiv" >
+                            <div style={{ maxWidth: "90%" }} onClick={this.handleClickOpen}>
                                 <Typography className='title' color="textSecondary" gutterBottom>
                                     NOTE TITLE<br />
                                     {this.props.allNote.title}
                                 </Typography>
-                                <Icon icon={pinIcon} />
+
+                                <Typography className="ContentStyle" >
+                                    NOTE CONTENTS<br />
+                                    {(this.props.allNote.content).split('\n')}
+                                </Typography>
                             </div>
-                            <Typography style={{ maxHeight: '105px', overflow: 'hidden' }}>
-                                NOTE CONTENTS<br />
-                                {(this.props.allNote.content).split('\n')}
-                            </Typography>
+                            <div>
+                                <Pinicon
+                                    noteid={this.props.allNote.noteid}
+                                    ispined={this.props.allNote.is_pined}
+                                />
+                            </div>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-evenly' }} >
+                        <div>
+                            {this.props.allNote.lable !== null ?
+                                < RemoveLable noteid={this.props.allNote.noteid}
+                                    lable={this.props.allNote.lable}
+                                /> : null
+                            }
+                        </div>
+                        <div className="NoteFunctions" >
                             <Reminder
                                 notesId={this.props.allNote.noteid}
                             />
@@ -156,29 +168,40 @@ export default class NoteCard extends Component {
                             <Collab
                                 noteid={this.props.allNote.noteid}
                             />
-                            <UnArchive
+                            <Archive
                                 noteid={this.props.allNote.noteid}
+                                isarchived={this.props.allNote.is_archived}
+
                             />
-                            
-                            < Morevert style={{ paddingBottom: '3%' }}
-                                aria-label="more"
-                                aria-controls="long-menu"
-                                aria-haspopup="true"
-                                onClick={this.handleMenuClick}
-                            />
-                            <Menu
-                                open={this.state.isTrue}
-                                anchorEl={this.state.anchorEl}
-                                onClose={this.handleMenuClose}
-                                keepMounted
-                                PaperProps={{
-                                    style: {
-                                        width: '10ch',
-                                    },
-                                }}
-                            >
-                                <MenuItem ><Trash noteid={this.props.allNote.noteid} /></MenuItem>
-                            </Menu>
+                            <div>
+                                < Morevert style={{ paddingBottom: '3%' }}
+                                    aria-label="more"
+                                    aria-controls="long-menu"
+                                    aria-haspopup="true"
+                                    onClick={this.handleMenuClick}
+                                />
+                                <Menu
+                                    open={this.state.isTrue}
+                                    anchorEl={this.state.anchorEl}
+                                    onClose={this.handleMenuClose}
+                                    keepMounted
+                                    PaperProps={{
+                                        style: {
+                                            width: '10ch',
+                                        },
+                                    }}
+                                >
+                                    <MenuItem ><UnArchive noteid={this.props.allNote.noteid} /></MenuItem>
+                                    <MenuItem onClick={this.handleMenuClose}>
+                                        <Label
+                                            noteid={this.props.allNote.noteid}
+                                            lable={this.props.allNote.lable}
+
+                                        />
+                                    </MenuItem>
+
+                                </Menu>
+                            </div>
                         </div>
                         <ToastContainer />
 
@@ -188,13 +211,69 @@ export default class NoteCard extends Component {
 
                 < div >
 
-                    <Dialog open={this.state.isOpen} onClose={this.handleClickClose} aria-labelledby="form-dialog-title" fullWidth={true}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <TextField id="standard-basic" label="Title" defaultValue={this.props.allNote.title} onChange={(e) => this.onChangeTitle(e)} /><Icon icon={pinIcon} />
-                        </div><br /><br /><br />
-                        <TextField id="standard-basic" label="Take a note" defaultValue={this.props.allNote.content} onChange={(e) => this.onChangeContent(e)}
+                    <Dialog open={this.state.isOpen} onClose={this.handleClickClose} fullWidth={true} PaperProps={{ style: { backgroundColor: this.state.color, padding: '1%5%' }, }} >
+                        {/* <div style={{ backgroundColor: this.state.color }} > */}
+                        <Pinicon
+                            noteid={this.props.allNote.noteid}
+                            ispined={this.props.allNote.is_pined}
+                        />
+                        <TextField label="Title" defaultValue={this.props.allNote.title} onChange={(e) => this.onChangeTitle(e)} InputProps={{ disableUnderline: true }} />
+                        <br /><br />
+                        <TextField label="Take a note" defaultValue={this.props.allNote.content} onChange={(e) => this.onChangeContent(e)}
                             helperText={this.state.error ? "Field should not be empty" : ""}
-                            error={this.state.error} multiline='true' /><br /><br /><br />
+                            error={this.state.error} multiline= {true} 
+                            InputProps={{ disableUnderline: true }} /><br />
+
+                        <div className="NoteFunctions" >
+                            <Reminder
+                                notesId={this.props.allNote.noteid}
+                            />
+                            <Colorpallet
+                                onSelectColor={this.handleColor}
+                                notesId={this.props.allNote.noteid}
+                            />
+                            <Addpic
+                                noteid={this.props.allNote.noteid}
+                            />
+                            <Collab
+                                noteid={this.props.allNote.noteid}
+                            />
+                            <Archive
+                                noteid={this.props.allNote.noteid}
+                                isarchived={this.props.allNote.is_archived}
+
+                            />
+                            <div>
+                                < Morevert style={{ paddingBottom: '3%' }}
+                                    aria-label="more"
+                                    aria-controls="long-menu"
+                                    aria-haspopup="true"
+                                    onClick={this.handleMenuClick}
+                                />
+                                <Menu
+                                    open={this.state.isTrue}
+                                    anchorEl={this.state.anchorEl}
+                                    onClose={this.handleMenuClose}
+                                    keepMounted
+                                    PaperProps={{
+                                        style: {
+                                            width: '10ch',
+                                        },
+                                    }}
+                                >
+                                    <MenuItem ><UnArchive noteid={this.props.allNote.noteid} /></MenuItem>
+                                    <MenuItem onClick={this.handleMenuClose}>
+                                        <Label
+                                            noteid={this.props.allNote.noteid}
+                                            lable={this.props.allNote.lable}
+
+                                        />
+                                    </MenuItem>
+
+                                </Menu>
+                            </div>
+                        </div>
+                        {/* </div> */}
                     </Dialog>
                     <ToastContainer />
                 </div >
