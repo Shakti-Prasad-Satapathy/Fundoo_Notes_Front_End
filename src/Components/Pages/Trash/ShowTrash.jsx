@@ -47,7 +47,7 @@ export default class Notes extends Component {
                             allNote: allNotes
                         })
                         if (data.success) {
-                            toast(data.message, { position: toast.POSITION.TOP_CENTER });
+                            // toast(data.message, { position: toast.POSITION.TOP_CENTER });
                         } else {
                             toast(data.message, { position: toast.POSITION.TOP_CENTER });
                         }

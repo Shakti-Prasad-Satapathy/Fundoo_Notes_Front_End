@@ -21,6 +21,16 @@ import Pinicon from '../PinUnpin/PinUnpin'
 import Label from '../Lables/Lables'
 import RemoveLable from '../Lables/RemoveLable'
 import './Archive.css';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+const theme = createMuiTheme({
+    overrides: {
+        MuiPaper: {
+            rounded: {
+                borderRadius: '8px'
+            }
+        }
+    }
+})
 
 export default class NoteCard extends Component {
     constructor(props) {
@@ -94,7 +104,7 @@ export default class NoteCard extends Component {
 
                         if (data.success) {
                             window.location.reload(false);
-                            toast(data.message, { position: toast.POSITION.TOP_CENTER });
+                            // toast(data.message, { position: toast.POSITION.TOP_CENTER });
                         } else {
                             toast(data.message, { position: toast.POSITION.TOP_CENTER });
                         }
@@ -126,6 +136,8 @@ export default class NoteCard extends Component {
 
         return (
             <div className="NoteCard" >
+                                <MuiThemeProvider theme={theme}>
+
                 <Card variant="outlined" className="Card" style={{ backgroundColor: this.state.color }} >
                     <CardContent className="CardContent" >
                         <div className="ContentDiv" >
@@ -208,6 +220,8 @@ export default class NoteCard extends Component {
                     </CardContent>
 
                 </Card >
+                </MuiThemeProvider>
+
 
                 < div >
 

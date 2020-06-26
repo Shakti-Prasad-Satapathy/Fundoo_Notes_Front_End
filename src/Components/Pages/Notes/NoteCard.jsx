@@ -21,7 +21,16 @@ import Pinicon from '../PinUnpin/PinUnpin'
 import Label from '../Lables/Lables'
 import RemoveLable from '../Lables/RemoveLable'
 import './Notes.css'
-
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+const theme = createMuiTheme({
+    overrides: {
+        MuiPaper: {
+            rounded: {
+                borderRadius: '8px'
+            }
+        }
+    }
+})
 export default class NoteCard extends Component {
     constructor(props) {
         super(props);
@@ -94,7 +103,7 @@ export default class NoteCard extends Component {
 
                         if (data.success) {
                             window.location.reload(false);
-                            toast(data.message, { position: toast.POSITION.TOP_CENTER });
+                            // toast(data.message, { position: toast.POSITION.TOP_CENTER });
                         } else {
                             toast(data.message, { position: toast.POSITION.TOP_CENTER });
                         }
@@ -126,88 +135,91 @@ export default class NoteCard extends Component {
 
         return (
             <div className="NoteCard" >
-                <Card variant="outlined" className="Card" style={{ backgroundColor: this.state.color }} >
-                    <CardContent className="CardContent" >
-                        <div className="ContentDiv" >
-                            <div style={{ maxWidth: "90%" }} onClick={this.handleClickOpen}>
-                                <Typography className='title' color="textSecondary" gutterBottom>
-                                    NOTE TITLE<br />
-                                    {this.props.allNote.title}
-                                </Typography>
+                <MuiThemeProvider theme={theme}>
 
-                                <Typography className="ContentStyle" >
-                                    NOTE CONTENTS<br />
-                                    {(this.props.allNote.content).split('\n')}
-                                </Typography>
+                    <Card variant="outlined" className="Card" style={{ backgroundColor: this.state.color }} >
+                        <CardContent className="CardContent" >
+                            <div className="ContentDiv" >
+                                <div style={{ maxWidth: "90%" }} onClick={this.handleClickOpen}>
+                                    <Typography className='title' color="textSecondary" gutterBottom>
+                                        NOTE TITLE<br />
+                                        {this.props.allNote.title}
+                                    </Typography>
+
+                                    <Typography className="ContentStyle" >
+                                        NOTE CONTENTS<br />
+                                        {(this.props.allNote.content).split('\n')}
+                                    </Typography>
+                                </div>
+                                <div>
+                                    <Pinicon
+                                        noteid={this.props.allNote.noteid}
+                                        ispined={this.props.allNote.is_pined}
+                                    />
+                                </div>
                             </div>
                             <div>
-                                <Pinicon
+                                {this.props.allNote.lable !== null ?
+                                    < RemoveLable noteid={this.props.allNote.noteid}
+                                        lable={this.props.allNote.lable}
+                                    /> : null
+                                }
+                            </div>
+                            <div className="NoteFunctions" >
+                                <Reminder
+                                    notesId={this.props.allNote.noteid}
+                                />
+                                <Colorpallet
+                                    onSelectColor={this.handleColor}
+                                    notesId={this.props.allNote.noteid}
+                                />
+                                <Addpic
                                     noteid={this.props.allNote.noteid}
-                                    ispined={this.props.allNote.is_pined}
                                 />
-                            </div>
-                        </div>
-                        <div>
-                            {this.props.allNote.lable !== null ?
-                                < RemoveLable noteid={this.props.allNote.noteid}
-                                    lable={this.props.allNote.lable}
-                                /> : null
-                            }
-                        </div>
-                        <div className="NoteFunctions" >
-                            <Reminder
-                                notesId={this.props.allNote.noteid}
-                            />
-                            <Colorpallet
-                                onSelectColor={this.handleColor}
-                                notesId={this.props.allNote.noteid}
-                            />
-                            <Addpic
-                                noteid={this.props.allNote.noteid}
-                            />
-                            <Collab
-                                noteid={this.props.allNote.noteid}
-                            />
-                            <Archive
-                                noteid={this.props.allNote.noteid}
-                                isarchived={this.props.allNote.is_archived}
-
-                            />
-                            <div>
-                                < Morevert style={{ paddingBottom: '3%' }}
-                                    aria-label="more"
-                                    aria-controls="long-menu"
-                                    aria-haspopup="true"
-                                    onClick={this.handleMenuClick}
+                                <Collab
+                                    noteid={this.props.allNote.noteid}
                                 />
-                                <Menu
-                                    open={this.state.isTrue}
-                                    anchorEl={this.state.anchorEl}
-                                    onClose={this.handleMenuClose}
-                                    keepMounted
-                                    PaperProps={{
-                                        style: {
-                                            width: '10ch',
-                                        },
-                                    }}
-                                >
-                                    <MenuItem ><Trash noteid={this.props.allNote.noteid} /></MenuItem>
-                                    <MenuItem onClick={this.handleMenuClose}>
-                                        <Label
-                                            noteid={this.props.allNote.noteid}
-                                            lable={this.props.allNote.lable}
+                                <Archive
+                                    noteid={this.props.allNote.noteid}
+                                    isarchived={this.props.allNote.is_archived}
 
-                                        />
-                                    </MenuItem>
+                                />
+                                <div>
+                                    < Morevert style={{ paddingBottom: '3%' }}
+                                        aria-label="more"
+                                        aria-controls="long-menu"
+                                        aria-haspopup="true"
+                                        onClick={this.handleMenuClick}
+                                    />
+                                    <Menu
+                                        open={this.state.isTrue}
+                                        anchorEl={this.state.anchorEl}
+                                        onClose={this.handleMenuClose}
+                                        keepMounted
+                                        PaperProps={{
+                                            style: {
+                                                width: '10ch',
+                                            },
+                                        }}
+                                    >
+                                        <MenuItem ><Trash noteid={this.props.allNote.noteid} /></MenuItem>
+                                        <MenuItem onClick={this.handleMenuClose}>
+                                            <Label
+                                                noteid={this.props.allNote.noteid}
+                                                lable={this.props.allNote.lable}
 
-                                </Menu>
+                                            />
+                                        </MenuItem>
+
+                                    </Menu>
+                                </div>
                             </div>
-                        </div>
-                        <ToastContainer />
+                            <ToastContainer />
 
-                    </CardContent>
+                        </CardContent>
 
-                </Card >
+                    </Card >
+                </MuiThemeProvider>
 
                 < div >
 
@@ -217,13 +229,13 @@ export default class NoteCard extends Component {
                             noteid={this.props.allNote.noteid}
                             ispined={this.props.allNote.is_pined}
                         />
-                        <TextField label="Title" defaultValue={this.props.allNote.title} onChange={(e) => this.onChangeTitle(e)} InputProps={{ disableUnderline: true }}/>
+                        <TextField label="Title" defaultValue={this.props.allNote.title} onChange={(e) => this.onChangeTitle(e)} InputProps={{ disableUnderline: true }} />
                         {/* <br /> */}
                         <TextField label="Take a note" defaultValue={this.props.allNote.content} onChange={(e) => this.onChangeContent(e)}
                             helperText={this.state.error ? "Field should not be empty" : ""}
-                            error={this.state.error} multiline = {true} 
+                            error={this.state.error} multiline={true}
                             InputProps={{ disableUnderline: true }} />
-                            <br />
+                        <br />
 
                         <div className="NoteFunctions" >
                             <Reminder

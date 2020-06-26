@@ -26,15 +26,28 @@ import Colorpallet from '@material-ui/icons/ColorLensOutlined';
 // import Archive from '../Archive/ArchiveComponent'
 import Archive from '@material-ui/icons/ArchiveOutlined';
 
-import Trash from '../Trash/addTotrash'
 import Addpic from '../imgupload/FileUpload'
-import Label from '../Lables/Lables'
 import Dialog from '@material-ui/core/Dialog';
 import './Notes.css'
 
 // import Pinicon from '../PinUnpin/PinUnpin'
-
-
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+const theme = createMuiTheme({
+    overrides: {
+        MuiPaper:{
+            elevation1:{
+                boxShadow: '1px 1px 10px 1px #888888',
+            },
+        // },
+        // MuiPaper:{
+            rounded:{
+                borderRadius: '8px',
+            },
+        },
+        
+    }
+})
+// const { classes } = props;
 
 export default class createNote extends Component {
 
@@ -107,7 +120,7 @@ export default class createNote extends Component {
                 response.json()
                     .then(data => {
                         if (data.success) {
-                            toast(data.message, { position: toast.POSITION.TOP_CENTER });
+                            // toast(data.message, { position: toast.POSITION.TOP_CENTER });
                             window.location.reload(false);
                         } else {
                             toast(data.message, { position: toast.POSITION.TOP_CENTER });
@@ -118,13 +131,15 @@ export default class createNote extends Component {
 
     render() {
         return (
-            <div>
-                <Card className="CreateNote" onClick={this.togglModal}>
-                    <Typography className='title' color="textSecondary" gutterBottom style={{ marginTop: '1%', marginLeft: '5%' }} >
-                        Take A Note...
+            <div >
+                <MuiThemeProvider theme={theme}>
+                    <Card className="CreateNote" onClick={this.togglModal}>
+                        <Typography className='title' color="textSecondary" gutterBottom style={{ marginTop: '1%', marginLeft: '5%' }} >
+                            Take A Note...
                         </Typography>
+                    </Card>
+                </MuiThemeProvider>
 
-                </Card>
                 <Dialog open={this.state.isOpen} onClose={this.handleClickClose} aria-labelledby="form-dialog-title" fullWidth={true} PaperProps={{ style: { padding: '0%5%', top: "-20%", right: "-4%", boxShadow: '1px 1px 30px 10px #353434', }, }}  >
                     <div >
                         <TextField label="Title" name="title" value={this.state.title} onChange={(e) => this.onChangeTitle(e)}
@@ -174,6 +189,7 @@ export default class createNote extends Component {
                     </div>
                 </Dialog>
                 <ToastContainer />
+
             </div>
         )
     }
